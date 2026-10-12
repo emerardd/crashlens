@@ -1,0 +1,16 @@
+[target]
+command = ["{python}", "datacraft.py"]
+input_mode = "stdin"
+timeout_seconds = 1.0
+success_codes = [0]
+reject_codes = [2]
+input_suffix = ".json"
+
+[fuzz]
+seed_directory = "seeds"
+max_cases = 80
+random_seed = 42
+max_seconds = 120
+minimize = true
+minimize_attempts = 16
+

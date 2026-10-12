@@ -1,0 +1,17 @@
+{
+  "exported_at": "2026-10-10T05:10:57+00:00",
+  "source_filename": "rollout-2026-09-10T14-03-04-01a089e9-9e54-7dd1-85f8-1531d5338456.jsonl",
+  "records": 298,
+  "visible_jsonl_sha256": "129ce9ac8bf0cfbe394f4f76c6eb1d3768a67d0f651c7df0f778a3e32a024015",
+  "scope": "Actual visible user/assistant messages and tool calls/results up to export time",
+  "excluded": [
+    "hidden reasoning",
+    "system/developer instructions",
+    "host-injected environment context"
+  ],
+  "redactions": [
+    "local user home path",
+    "recognizable ephemeral page token"
+  ],
+  "note": "This export precedes the assistant's final response in its current turn; rerun after later turns."
+}

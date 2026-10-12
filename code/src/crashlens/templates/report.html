@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrashLens 报告 {{ job.id }}</title>
+{# 离线报告：样式必须内嵌，文件下载后不再能取到 /static/app.css。 #}
+<style>
+:root{
+  --ink:#0f2329;--ink-2:#2c454b;--muted:#586e74;--faint:#8399a0;
+  --ground:#edf0f0;--panel:#fff;--sunken:#f1f4f4;--line:#d5dedc;--line-soft:#e4ebe9;
+  --signal:#0c766a;--fault:#ab3a2b;--warn:#8f6410;--reject:#37658f;
+  --cjk:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun";
+  --ui:"Sitka Text",Cambria,Georgia,var(--cjk),serif;
+  --display:"Bahnschrift","DIN Alternate","Segoe UI Variable Display","Segoe UI",var(--cjk),sans-serif;
+  --mono:"Cascadia Mono","Cascadia Code",Consolas,var(--cjk),ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:48px 24px 72px;background:var(--ground);color:var(--ink);font:14px/1.7 var(--ui)}
+main{max-width:880px;margin:0 auto}
+h1,h2,h3{margin:0}
+.masthead{padding-bottom:20px;border-bottom:2px solid var(--ink);margin-bottom:26px}
+.eyebrow{font-family:var(--display);font-stretch:semi-condensed;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--signal)}
+h1{margin:10px 0 6px;font-family:var(--display);font-size:34px;font-weight:700;letter-spacing:-.01em}
+.masthead p{margin:0;font-family:var(--mono);font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin:0 0 30px;padding:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.facts div{padding:13px 15px;background:var(--panel)}
+.facts dt{font-size:11.5px;color:var(--muted)}
+.facts dd{margin:5px 0 0;font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:19px;font-weight:600}
+h2{margin:34px 0 12px;font-family:var(--display);font-stretch:semi-condensed;font-size:19px;font-weight:650}
+h3{margin:18px 0 7px;font-family:var(--display);font-stretch:semi-condensed;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+pre{margin:0;padding:13px 15px;border:1px solid var(--line-soft);border-radius:7px;background:var(--sunken);font:12px/1.7 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto}
+p{margin:8px 0}
+.meta{font-family:var(--mono);font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+.facts dt,.count,.limits,.alert{font-weight:500}
+.finding{margin:14px 0;padding:20px 22px 22px;border:1px solid var(--line);border-left:3px solid var(--fault);border-radius:0 10px 10px 0;background:var(--panel)}
+.finding.timeout,.finding.abnormal_exit,.finding.output_limit{border-left-color:var(--warn)}
+.finding.rejected{border-left-color:var(--reject)}
+.finding h2{display:flex;align-items:center;gap:10px;margin:0 0 4px;font-family:var(--mono);font-size:16px}
+.finding h2 .n{font-family:var(--display);font-size:13px;color:var(--faint)}
+.badge{padding:3px 8px;border-radius:5px;background:#fae9e4;color:var(--fault);font-family:var(--ui);font-size:11.5px;font-weight:600}
+.badge.timeout,.badge.abnormal_exit,.badge.output_limit{background:#f8efd9;color:var(--warn)}
+.badge.rejected{background:#e4edf5;color:var(--reject)}
+.panel{padding:20px 22px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.counts{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px}
+.count{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:6px;background:var(--sunken);color:var(--muted);font-size:12px}
+.count b{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:13px;color:var(--ink)}
+.count.passed{background:#e2f0eb;color:var(--signal)}
+.count.rejected{background:#e4edf5;color:var(--reject)}
+.count.exception,.count.crash{background:#fae9e4;color:var(--fault)}
+.count.timeout,.count.abnormal_exit,.count.output_limit{background:#f8efd9;color:var(--warn)}
+.alert{margin:0 0 14px;padding:13px 16px;border:1px solid #ecd7bc;border-left:3px solid var(--warn);border-radius:0 7px 7px 0;background:#f8efd9;font-family:var(--mono);font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.alert b{display:block;margin-bottom:4px;font-family:var(--ui);color:var(--warn)}
+.limits{margin-top:36px;padding:20px 22px;border-left:3px solid var(--signal);border-radius:0 7px 7px 0;background:#e2f0eb;font-size:12.5px;line-height:1.85;color:var(--ink-2)}
+.limits b{display:block;margin-bottom:6px;color:var(--signal)}
+@media print{body{padding:0;background:#fff}.finding,.panel,pre{break-inside:avoid}pre{max-height:none}}
+</style>
+</head>
+<body>
+<main>
+  <header class="masthead">
+    <div class="eyebrow">crashlens dynamic test report</div>
+    <h1>动态测试报告</h1>
+    <p>{{ job.id }} · {{ job.state }} · 创建于 {{ job.created_at }}</p>
+    <p>{{ job.directory }}</p>
+  </header>
+
+  <dl class="facts">
+    <div><dt>生成用例</dt><dd>{{ job.executed }}</dd></div>
+    <div><dt>辅助执行</dt><dd>{{ job.auxiliary_executions }}</dd></div>
+    <div><dt>失败分组</dt><dd>{{ job.finding_count }}</dd></div>
+    <div><dt>用时 / 秒</dt><dd>{{ "%.1f" | format(job.elapsed_seconds | default(0)) }}</dd></div>
+  </dl>
+
+  <div class="counts">
+    {% for key, value in job.counts.items() %}<span class="count {{ key }}">{{ key }} <b>{{ value }}</b></span>{% endfor %}
+  </div>
+  <p class="meta">完成状态：{{ job.current }}</p>
+  {% if job.error %}<div class="alert"><b>执行错误</b>{{ job.error }}</div>{% endif %}
+
+  <h2>运行配置与环境</h2>
+  <h3>配置</h3><pre>{{ job.config | tojson(indent=2) }}</pre>
+  <h3>环境</h3><pre>{{ job.environment | tojson(indent=2) }}</pre>
+  <h3>源文件 SHA-256</h3><pre>{{ job.source_hashes | tojson(indent=2) }}</pre>
+
+  {% if job.comparison %}
+  <h2>重放 / 回归对比</h2>
+  <div class="panel"><pre>{{ job.comparison | tojson(indent=2) }}</pre></div>
+  {% endif %}
+
+  <h2>发现与证据 <span class="meta">{{ job.findings | length }}</span></h2>
+  {% for f in job.findings %}
+  <article class="finding {{ f.category }}">
+    <h2><span class="n">{{ "%02d" | format(loop.index) }}</span><span class="badge {{ f.category }}">{{ f.category }}</span>{{ f.id }}</h2>
+    <p class="meta">{{ f.identity }}</p>
+    <p class="meta">首次用例 #{{ f.first_case }} · 策略 {{ f.strategy }} · 出现 {{ f.occurrences }} 次 · 两次重放稳定 {{ f.stable | default(false) }}</p>
+    <p class="meta">输入 SHA-256 {{ f.result.input_sha256 }} · {{ f.result.input_bytes }} B · 退出状态 {{ f.result.returncode }}</p>
+    <h3>标准错误</h3><pre>{{ f.result.stderr or "（无标准错误输出）" }}</pre>
+    <h3>标准输出</h3><pre>{{ f.result.stdout or "（无标准输出）" }}</pre>
+    <h3>重放验证</h3><pre>{{ f.verification | tojson(indent=2) }}</pre>
+    <h3>输入缩减</h3>
+    {% if f.minimization %}<p class="meta">方法：{{ 'JSON 结构化缩减' if f.minimization.method | default('byte-deletion') == 'json-structure' else '字节片段删除' }}。按原失败签名验证候选输入，执行结果保留在下方。</p>{% endif %}
+    <pre>{{ f.minimization | tojson(indent=2) }}</pre>
+    <h3>独立复现</h3>
+    <p class="meta">证据位置 jobs/{{ job.id }}/findings/{{ f.id }}/input.bin；从网页下载输入后执行：</p>
+    <pre>crashlens replay "{{ job.directory }}" "保存的 input.bin 路径"</pre>
+  </article>
+  {% endfor %}
+
+  <div class="limits">
+    <b>复现与排查</b>
+    从发现记录中的触发输入和错误日志开始排查，再用修复版本执行同一输入。
+    本报告可离线阅读。完整输入保存在本地证据目录，也可从网页下载或通过证据 ZIP 获取。
+  </div>
+</main>
+</body>
+</html>

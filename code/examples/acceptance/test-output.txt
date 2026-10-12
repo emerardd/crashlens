@@ -1,0 +1,22 @@
+Verified at 2026-10-10T05:10:33+00:00
+
+Command: python -m pytest code/tests -q -p no:cacheprovider --basetemp=.crashlens/pytest-delivery-91d8177741
+Exit code: 0
+............................s............................                [100%]
+============================== warnings summary ===============================
+.venv\Lib\site-packages\fastapi\testclient.py:1
+  <PROJECT_ROOT>\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv\Lib\site-packages\starlette\testclient.py:53
+  <PROJECT_ROOT>\.venv\Lib\site-packages\starlette\testclient.py:53: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+56 passed, 1 skipped, 2 warnings in 49.54s
+
+
+Command: python -m pip check
+Exit code: 0
+No broken requirements found.
+

@@ -1,0 +1,840 @@
+{
+  "verified_at": "2026-10-10T05:08:51+00:00",
+  "kind": "Artificial teaching defects, not third-party vulnerabilities",
+  "buggy": {
+    "id": "53e3e3e8c7e245d5",
+    "directory": "<PROJECT_ROOT>\\code\\examples\\datacraft-buggy",
+    "config": {
+      "target": {
+        "command": [
+          "{python}",
+          "datacraft.py"
+        ],
+        "input_mode": "stdin",
+        "timeout_seconds": 1.0,
+        "success_codes": [
+          0
+        ],
+        "reject_codes": [
+          2
+        ],
+        "max_output_bytes": 262144,
+        "input_suffix": ".json"
+      },
+      "fuzz": {
+        "seed_directory": "seeds",
+        "max_cases": 80,
+        "random_seed": 42,
+        "max_input_bytes": 16384,
+        "max_seconds": 120.0,
+        "minimize": true,
+        "minimize_attempts": 16
+      }
+    },
+    "created_at": "2026-10-10T05:08:05+00:00",
+    "updated_at": "2026-10-10T05:08:33+00:00",
+    "state": "completed",
+    "executed": 80,
+    "auxiliary_executions": 55,
+    "counts": {
+      "passed": 20,
+      "rejected": 43,
+      "exception": 15,
+      "timeout": 2
+    },
+    "finding_count": 6,
+    "current": "测试完成",
+    "source": null,
+    "seeds": [
+      {
+        "name": "01-ratio.json",
+        "file": "000.bin"
+      },
+      {
+        "name": "02-repeat.json",
+        "file": "001.bin"
+      }
+    ],
+    "source_hashes": {
+      "datacraft.py": "b34e4c3d3fb75a4be4ec12a986cc051a53d93676f9d8a1f282555ff0d51fa8f4"
+    },
+    "environment": {
+      "platform": "Windows-11-10.0.26300-SP0",
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+      "executable": "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe"
+    },
+    "error": null,
+    "elapsed_seconds": 27.797,
+    "completion_reason": "case_limit",
+    "budget_exhausted": false,
+    "finished_at": "2026-10-10T05:08:33+00:00"
+  },
+  "fixed": {
+    "id": "b37f3991c9524ceb",
+    "directory": "<PROJECT_ROOT>\\code\\examples\\datacraft-fixed",
+    "config": {
+      "target": {
+        "command": [
+          "{python}",
+          "datacraft.py"
+        ],
+        "input_mode": "stdin",
+        "timeout_seconds": 1.0,
+        "success_codes": [
+          0
+        ],
+        "reject_codes": [
+          2
+        ],
+        "max_output_bytes": 262144,
+        "input_suffix": ".json"
+      },
+      "fuzz": {
+        "seed_directory": "seeds",
+        "max_cases": 80,
+        "random_seed": 42,
+        "max_input_bytes": 16384,
+        "max_seconds": 120.0,
+        "minimize": true,
+        "minimize_attempts": 16
+      }
+    },
+    "created_at": "2026-10-10T05:08:33+00:00",
+    "updated_at": "2026-10-10T05:08:48+00:00",
+    "state": "completed",
+    "executed": 80,
+    "auxiliary_executions": 0,
+    "counts": {
+      "passed": 20,
+      "rejected": 60
+    },
+    "finding_count": 0,
+    "current": "测试完成",
+    "source": null,
+    "seeds": [
+      {
+        "name": "01-ratio.json",
+        "file": "000.bin"
+      },
+      {
+        "name": "02-repeat.json",
+        "file": "001.bin"
+      }
+    ],
+    "source_hashes": {
+      "datacraft.py": "66f40dec9466556f2f703283bd5f70b3ec9c84732924ff60ce8755a2032cba4b"
+    },
+    "environment": {
+      "platform": "Windows-11-10.0.26300-SP0",
+      "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+      "executable": "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe"
+    },
+    "error": null,
+    "elapsed_seconds": 14.953,
+    "completion_reason": "case_limit",
+    "budget_exhausted": false,
+    "finished_at": "2026-10-10T05:08:48+00:00"
+  },
+  "findings": [
+    {
+      "id": "05ec7f07e5dca637",
+      "category": "exception",
+      "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"30\", \"main\"]]",
+      "signature": "05ec7f07e5dca637",
+      "occurrences": 1,
+      "first_case": 24,
+      "strategy": "json-structure",
+      "result": {
+        "category": "exception",
+        "signature": "05ec7f07e5dca637",
+        "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"30\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 30, in main\r\n    count = obj[\"count\"]\r\n            ~~~^^^^^^^^^\r\nKeyError: 'count'\r\n",
+        "duration_seconds": 0.172,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "14aee6b7597d5c361db8c28f5792c7f86e6d5fa2138a303f7c96bcb37057addd",
+        "input_bytes": 37
+      },
+      "verification": [
+        {
+          "category": "exception",
+          "signature": "05ec7f07e5dca637",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"30\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 30, in main\r\n    count = obj[\"count\"]\r\n            ~~~^^^^^^^^^\r\nKeyError: 'count'\r\n",
+          "duration_seconds": 0.172,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "14aee6b7597d5c361db8c28f5792c7f86e6d5fa2138a303f7c96bcb37057addd",
+          "input_bytes": 37
+        },
+        {
+          "category": "exception",
+          "signature": "05ec7f07e5dca637",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"30\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 30, in main\r\n    count = obj[\"count\"]\r\n            ~~~^^^^^^^^^\r\nKeyError: 'count'\r\n",
+          "duration_seconds": 0.188,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "14aee6b7597d5c361db8c28f5792c7f86e6d5fa2138a303f7c96bcb37057addd",
+          "input_bytes": 37
+        }
+      ],
+      "minimization": {
+        "original_bytes": 37,
+        "reduced_bytes": 22,
+        "method": "json-structure",
+        "attempts": 12,
+        "verified": true,
+        "result": {
+          "category": "exception",
+          "signature": "05ec7f07e5dca637",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"30\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 30, in main\r\n    count = obj[\"count\"]\r\n            ~~~^^^^^^^^^\r\nKeyError: 'count'\r\n",
+          "duration_seconds": 0.172,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "98659213d2b3491ceb8aeb6abf59da441267f774c323894f6cb85ed7c96e3891",
+          "input_bytes": 22
+        }
+      },
+      "label": "待确认",
+      "stable": true
+    },
+    {
+      "id": "1cd8163c0f63a499",
+      "category": "exception",
+      "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"25\", \"main\"]]",
+      "signature": "1cd8163c0f63a499",
+      "occurrences": 3,
+      "first_case": 5,
+      "strategy": "boundary",
+      "result": {
+        "category": "exception",
+        "signature": "1cd8163c0f63a499",
+        "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"25\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 25, in main\r\n    operation = obj[\"operation\"]\r\n                ~~~^^^^^^^^^^^^^\r\nKeyError: 'operation'\r\n",
+        "duration_seconds": 0.187,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "input_bytes": 2
+      },
+      "verification": [
+        {
+          "category": "exception",
+          "signature": "1cd8163c0f63a499",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"25\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 25, in main\r\n    operation = obj[\"operation\"]\r\n                ~~~^^^^^^^^^^^^^\r\nKeyError: 'operation'\r\n",
+          "duration_seconds": 0.172,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "input_bytes": 2
+        },
+        {
+          "category": "exception",
+          "signature": "1cd8163c0f63a499",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"25\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 25, in main\r\n    operation = obj[\"operation\"]\r\n                ~~~^^^^^^^^^^^^^\r\nKeyError: 'operation'\r\n",
+          "duration_seconds": 0.172,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "input_bytes": 2
+        }
+      ],
+      "minimization": {
+        "original_bytes": 2,
+        "reduced_bytes": 2,
+        "method": "json-structure",
+        "attempts": 0,
+        "verified": true,
+        "result": {
+          "category": "exception",
+          "signature": "1cd8163c0f63a499",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"25\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 25, in main\r\n    operation = obj[\"operation\"]\r\n                ~~~^^^^^^^^^^^^^\r\nKeyError: 'operation'\r\n",
+          "duration_seconds": 0.171,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "input_bytes": 2
+        }
+      },
+      "label": "待确认",
+      "stable": true
+    },
+    {
+      "id": "23216176627c06ae",
+      "category": "exception",
+      "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+      "signature": "23216176627c06ae",
+      "occurrences": 5,
+      "first_case": 23,
+      "strategy": "json-structure",
+      "result": {
+        "category": "exception",
+        "signature": "23216176627c06ae",
+        "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~^^^^^^^^^^^^^\r\nKeyError: 'numerator'\r\n",
+        "duration_seconds": 0.156,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "644d7238ab21a05342da74efe441f3063174acc572ecb376f73deb55e4f3545d",
+        "input_bytes": 37
+      },
+      "verification": [
+        {
+          "category": "exception",
+          "signature": "23216176627c06ae",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~^^^^^^^^^^^^^\r\nKeyError: 'numerator'\r\n",
+          "duration_seconds": 0.188,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "644d7238ab21a05342da74efe441f3063174acc572ecb376f73deb55e4f3545d",
+          "input_bytes": 37
+        },
+        {
+          "category": "exception",
+          "signature": "23216176627c06ae",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~^^^^^^^^^^^^^\r\nKeyError: 'numerator'\r\n",
+          "duration_seconds": 0.156,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "644d7238ab21a05342da74efe441f3063174acc572ecb376f73deb55e4f3545d",
+          "input_bytes": 37
+        }
+      ],
+      "minimization": {
+        "original_bytes": 37,
+        "reduced_bytes": 21,
+        "method": "json-structure",
+        "attempts": 9,
+        "verified": true,
+        "result": {
+          "category": "exception",
+          "signature": "23216176627c06ae",
+          "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~^^^^^^^^^^^^^\r\nKeyError: 'numerator'\r\n",
+          "duration_seconds": 0.203,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "80548c83a269660f0ef4411f28edae462b84edec8a1bc63f498ffe702ad0453f",
+          "input_bytes": 21
+        }
+      },
+      "label": "待确认",
+      "stable": true
+    },
+    {
+      "id": "6690b541ed7de1ee",
+      "category": "exception",
+      "identity": "ZeroDivisionError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+      "signature": "6690b541ed7de1ee",
+      "occurrences": 1,
+      "first_case": 20,
+      "strategy": "json-structure",
+      "result": {
+        "category": "exception",
+        "signature": "6690b541ed7de1ee",
+        "identity": "ZeroDivisionError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nZeroDivisionError: division by zero\r\n",
+        "duration_seconds": 0.172,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "0560b09fa3e461b75adfc1b5127c8117267008478ac794d01471297e29985723",
+        "input_bytes": 52
+      },
+      "verification": [
+        {
+          "category": "exception",
+          "signature": "6690b541ed7de1ee",
+          "identity": "ZeroDivisionError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nZeroDivisionError: division by zero\r\n",
+          "duration_seconds": 0.157,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "0560b09fa3e461b75adfc1b5127c8117267008478ac794d01471297e29985723",
+          "input_bytes": 52
+        },
+        {
+          "category": "exception",
+          "signature": "6690b541ed7de1ee",
+          "identity": "ZeroDivisionError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nZeroDivisionError: division by zero\r\n",
+          "duration_seconds": 0.156,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "0560b09fa3e461b75adfc1b5127c8117267008478ac794d01471297e29985723",
+          "input_bytes": 52
+        }
+      ],
+      "minimization": {
+        "original_bytes": 52,
+        "reduced_bytes": 51,
+        "method": "json-structure",
+        "attempts": 10,
+        "verified": true,
+        "result": {
+          "category": "exception",
+          "signature": "6690b541ed7de1ee",
+          "identity": "ZeroDivisionError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nZeroDivisionError: division by zero\r\n",
+          "duration_seconds": 0.172,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "5605a10479fa8a3ac5413ca05bbc0f4bcfbc14f10b8afaa41a7b4cbabac1653d",
+          "input_bytes": 51
+        }
+      },
+      "label": "待确认",
+      "stable": true
+    },
+    {
+      "id": "876097aa3cbe688e",
+      "category": "exception",
+      "identity": "TypeError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+      "signature": "876097aa3cbe688e",
+      "occurrences": 5,
+      "first_case": 65,
+      "strategy": "json-structure",
+      "result": {
+        "category": "exception",
+        "signature": "876097aa3cbe688e",
+        "identity": "TypeError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'int'\r\n",
+        "duration_seconds": 0.157,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "1539838d8bb87935aa2acb3db7a891b8dab234598671d8869980aa37f364b349",
+        "input_bytes": 54
+      },
+      "verification": [
+        {
+          "category": "exception",
+          "signature": "876097aa3cbe688e",
+          "identity": "TypeError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'int'\r\n",
+          "duration_seconds": 0.171,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "1539838d8bb87935aa2acb3db7a891b8dab234598671d8869980aa37f364b349",
+          "input_bytes": 54
+        },
+        {
+          "category": "exception",
+          "signature": "876097aa3cbe688e",
+          "identity": "TypeError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'int'\r\n",
+          "duration_seconds": 0.157,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "1539838d8bb87935aa2acb3db7a891b8dab234598671d8869980aa37f364b349",
+          "input_bytes": 54
+        }
+      ],
+      "minimization": {
+        "original_bytes": 54,
+        "reduced_bytes": 54,
+        "method": "json-structure",
+        "attempts": 7,
+        "verified": true,
+        "result": {
+          "category": "exception",
+          "signature": "876097aa3cbe688e",
+          "identity": "TypeError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+          "returncode": 1,
+          "stdout": "",
+          "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'int'\r\n",
+          "duration_seconds": 0.156,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "1539838d8bb87935aa2acb3db7a891b8dab234598671d8869980aa37f364b349",
+          "input_bytes": 54
+        }
+      },
+      "label": "待确认",
+      "stable": true
+    },
+    {
+      "id": "f77d1bb58da886e3",
+      "category": "timeout",
+      "identity": "timeout",
+      "signature": "f77d1bb58da886e3",
+      "occurrences": 2,
+      "first_case": 30,
+      "strategy": "json-structure",
+      "result": {
+        "category": "timeout",
+        "signature": "f77d1bb58da886e3",
+        "identity": "timeout",
+        "returncode": null,
+        "stdout": "",
+        "stderr": "",
+        "duration_seconds": 1.015,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "732982dda25e722c689626f384295b15bf6bea32a47bbaa7bdb6796e66b5e4da",
+        "input_bytes": 48
+      },
+      "verification": [
+        {
+          "category": "timeout",
+          "signature": "f77d1bb58da886e3",
+          "identity": "timeout",
+          "returncode": null,
+          "stdout": "",
+          "stderr": "",
+          "duration_seconds": 1.016,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "732982dda25e722c689626f384295b15bf6bea32a47bbaa7bdb6796e66b5e4da",
+          "input_bytes": 48
+        },
+        {
+          "category": "timeout",
+          "signature": "f77d1bb58da886e3",
+          "identity": "timeout",
+          "returncode": null,
+          "stdout": "",
+          "stderr": "",
+          "duration_seconds": 1.015,
+          "command": [
+            "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+            "datacraft.py"
+          ],
+          "output_truncated": false,
+          "input_sha256": "732982dda25e722c689626f384295b15bf6bea32a47bbaa7bdb6796e66b5e4da",
+          "input_bytes": 48
+        }
+      ],
+      "minimization": null,
+      "label": "待确认",
+      "stable": true
+    }
+  ],
+  "regressions": [
+    {
+      "finding_id": "05ec7f07e5dca637",
+      "input_variant": "minimized.bin",
+      "replay": {
+        "category": "exception",
+        "signature": "05ec7f07e5dca637",
+        "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"30\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 30, in main\r\n    count = obj[\"count\"]\r\n            ~~~^^^^^^^^^\r\nKeyError: 'count'\r\n",
+        "duration_seconds": 0.171,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "98659213d2b3491ceb8aeb6abf59da441267f774c323894f6cb85ed7c96e3891",
+        "input_bytes": 22
+      },
+      "fixed": {
+        "category": "rejected",
+        "signature": "20cd938a2ea64f61",
+        "identity": "rejected",
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "Count must be an integer in [0, 100]\r\n",
+        "duration_seconds": 0.157,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "98659213d2b3491ceb8aeb6abf59da441267f774c323894f6cb85ed7c96e3891",
+        "input_bytes": 22
+      }
+    },
+    {
+      "finding_id": "1cd8163c0f63a499",
+      "input_variant": "minimized.bin",
+      "replay": {
+        "category": "exception",
+        "signature": "1cd8163c0f63a499",
+        "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"25\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 25, in main\r\n    operation = obj[\"operation\"]\r\n                ~~~^^^^^^^^^^^^^\r\nKeyError: 'operation'\r\n",
+        "duration_seconds": 0.156,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "input_bytes": 2
+      },
+      "fixed": {
+        "category": "rejected",
+        "signature": "20cd938a2ea64f61",
+        "identity": "rejected",
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "Unknown operation\r\n",
+        "duration_seconds": 0.156,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "input_bytes": 2
+      }
+    },
+    {
+      "finding_id": "23216176627c06ae",
+      "input_variant": "minimized.bin",
+      "replay": {
+        "category": "exception",
+        "signature": "23216176627c06ae",
+        "identity": "KeyError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~^^^^^^^^^^^^^\r\nKeyError: 'numerator'\r\n",
+        "duration_seconds": 0.157,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "80548c83a269660f0ef4411f28edae462b84edec8a1bc63f498ffe702ad0453f",
+        "input_bytes": 21
+      },
+      "fixed": {
+        "category": "rejected",
+        "signature": "20cd938a2ea64f61",
+        "identity": "rejected",
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "Expected numeric operands\r\n",
+        "duration_seconds": 0.187,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "80548c83a269660f0ef4411f28edae462b84edec8a1bc63f498ffe702ad0453f",
+        "input_bytes": 21
+      }
+    },
+    {
+      "finding_id": "6690b541ed7de1ee",
+      "input_variant": "minimized.bin",
+      "replay": {
+        "category": "exception",
+        "signature": "6690b541ed7de1ee",
+        "identity": "ZeroDivisionError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nZeroDivisionError: division by zero\r\n",
+        "duration_seconds": 0.172,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "5605a10479fa8a3ac5413ca05bbc0f4bcfbc14f10b8afaa41a7b4cbabac1653d",
+        "input_bytes": 51
+      },
+      "fixed": {
+        "category": "rejected",
+        "signature": "20cd938a2ea64f61",
+        "identity": "rejected",
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "Denominator must not be zero\r\n",
+        "duration_seconds": 0.156,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "5605a10479fa8a3ac5413ca05bbc0f4bcfbc14f10b8afaa41a7b4cbabac1653d",
+        "input_bytes": 51
+      }
+    },
+    {
+      "finding_id": "876097aa3cbe688e",
+      "input_variant": "minimized.bin",
+      "replay": {
+        "category": "exception",
+        "signature": "876097aa3cbe688e",
+        "identity": "TypeError:[[\"datacraft.py\", \"49\", \"<module>\"], [\"datacraft.py\", \"28\", \"main\"]]",
+        "returncode": 1,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 49, in <module>\r\n    raise SystemExit(main())\r\n                     ^^^^^^\r\n  File \"<PROJECT_ROOT>\\code\\examples\\datacraft-buggy\\datacraft.py\", line 28, in main\r\n    value = obj[\"numerator\"] / obj[\"denominator\"]\r\n            ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~\r\nTypeError: unsupported operand type(s) for /: 'NoneType' and 'int'\r\n",
+        "duration_seconds": 0.188,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "1539838d8bb87935aa2acb3db7a891b8dab234598671d8869980aa37f364b349",
+        "input_bytes": 54
+      },
+      "fixed": {
+        "category": "rejected",
+        "signature": "20cd938a2ea64f61",
+        "identity": "rejected",
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "Expected numeric operands\r\n",
+        "duration_seconds": 0.157,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "1539838d8bb87935aa2acb3db7a891b8dab234598671d8869980aa37f364b349",
+        "input_bytes": 54
+      }
+    },
+    {
+      "finding_id": "f77d1bb58da886e3",
+      "input_variant": "input.bin",
+      "replay": {
+        "category": "timeout",
+        "signature": "f77d1bb58da886e3",
+        "identity": "timeout",
+        "returncode": null,
+        "stdout": "",
+        "stderr": "",
+        "duration_seconds": 1.015,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "732982dda25e722c689626f384295b15bf6bea32a47bbaa7bdb6796e66b5e4da",
+        "input_bytes": 48
+      },
+      "fixed": {
+        "category": "rejected",
+        "signature": "20cd938a2ea64f61",
+        "identity": "rejected",
+        "returncode": 2,
+        "stdout": "",
+        "stderr": "Count must be an integer in [0, 100]\r\n",
+        "duration_seconds": 0.157,
+        "command": [
+          "<PROJECT_ROOT>\\.venv\\Scripts\\python.exe",
+          "datacraft.py"
+        ],
+        "output_truncated": false,
+        "input_sha256": "732982dda25e722c689626f384295b15bf6bea32a47bbaa7bdb6796e66b5e4da",
+        "input_bytes": 48
+      }
+    }
+  ]
+}

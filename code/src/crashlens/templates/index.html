@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="crashlens-token" content="{{ token }}">
+  <title>CrashLens · 看见失败，重现证据</title>
+  <link rel="stylesheet" href="/static/app.css"><script defer src="/static/app.js"></script>
+</head>
+<body data-buggy="{{ buggy }}" data-fixed="{{ fixed }}">
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-icon"></span> CrashLens<span class="version">0.1</span></a>
+    <div class="workspace-label">本地工作区</div>
+    <button class="nav active" id="nav-new"><span>＋</span> 创建测试</button>
+    <div class="history-heading">测试记录 <span id="history-count">0</span></div>
+    <div id="history" class="history"></div>
+    <div class="sidebar-bottom">
+      <span class="green-dot"></span>本地执行，数据保存在本机
+      <small>软件安全课程 / 动态测试实验室</small>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" type="button">切换深色界面</button>
+  </aside>
+  <main>
+    <header>
+      <div class="breadcrumb">工作空间 <span>/</span> <strong id="page-label">创建测试</strong></div>
+      <span class="pill"><span class="green-dot"></span>127.0.0.1 仅本机</span>
+    </header>
+    <div id="notice" role="status" hidden></div>
+    <section id="create-view">
+      <div class="intro">
+        <div class="eyebrow">observe · reproduce · understand</div>
+        <h1>让每一次失败，<br><span>都有迹可循。</span></h1>
+        <p>从软件目录开始，自动生成输入、捕获异常，把一次意外变成可以复现的测试证据。</p>
+      </div>
+      <div class="create-grid">
+        <form id="create-form" class="card config-card">
+          <div class="card-title"><span class="step">01</span><h2>选择待测软件</h2><span class="muted">本机目录</span></div>
+          <label for="directory">软件所在目录</label>
+          <div class="input-row"><input id="directory" required placeholder="例如 D:\projects\my-cli"><button type="button" class="secondary" id="inspect">读取配置</button></div>
+          <p class="hint">支持通过标准输入或文件接收数据、运行后退出的命令行程序。</p>
+          <div class="demo-row"><span>先体验完整流程</span><button type="button" id="use-buggy">缺陷演示 ↗</button><button type="button" id="use-fixed">修复版本 ↗</button></div>
+          <div class="divider"></div>
+          <div class="card-title"><span class="step">02</span><h2>配置测试任务</h2></div>
+          <label for="command">启动命令 <span class="muted">JSON 参数列表</span></label>
+          <input id="command" value='["{python}", "main.py"]' required>
+          <p class="hint">{python} 使用平台解释器；文件输入请添加 {input_file} 参数。</p>
+          <div class="fields"><div><label for="input-mode">输入方式</label><select id="input-mode"><option value="stdin">标准输入 stdin</option><option value="file">文件路径参数</option></select></div><div><label for="seed-dir">种子目录</label><input id="seed-dir" value="seeds"></div></div>
+          <div class="fields three"><div><label for="max-cases">生成用例上限</label><input id="max-cases" type="number" min="1" max="10000" value="80"></div><div><label for="timeout">单次超时 / 秒</label><input id="timeout" type="number" min="0.1" max="60" step="0.1" value="1"></div><div><label for="random-seed">随机种子</label><input id="random-seed" type="number" value="42"></div></div>
+          <details><summary>高级配置</summary><div class="fields"><div><label for="reject-codes">正常拒绝退出码</label><input id="reject-codes" value="2"></div><div><label for="max-seconds">任务预算 / 秒</label><input id="max-seconds" type="number" min="1" max="3600" value="120"></div></div><p class="hint">只有符合目标程序约定的退出码才应配置为正常拒绝。其他非零退出会单独记录。</p></details>
+          <label class="checkbox"><input id="minimize" type="checkbox" checked><span>自动重放，并尝试缩减稳定异常的触发输入</span></label>
+          <button class="primary submit" type="submit" id="start">开始动态测试 <span>→</span></button>
+          <p class="footnote">待测程序会直接在本机运行，请选择你信任的软件。</p>
+        </form>
+        <aside class="guide">
+          <div class="card guide-card">
+            <div class="eyebrow">一次完整的测试</div>
+            <ol>
+              <li><b>生成输入</b><span>正常种子、边界值与结构化变异</span></li>
+              <li><b>观察运行</b><span>独立进程执行，收集退出状态与日志</span></li>
+              <li><b>验证发现</b><span>相似失败归组，重放确认稳定性</span></li>
+              <li><b>保留证据</b><span>触发输入、错误堆栈与可导出报告</span></li>
+            </ol>
+          </div>
+          <div class="note">
+            <b>从失败输入开始排查</b>
+            <p>查看触发输入和错误日志，重放问题，再用修复版本执行同一输入。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <section id="job-view" hidden>
+      <div class="job-heading"><div><div class="eyebrow" id="job-id"></div><h1 id="job-title">测试任务</h1><p id="job-directory"></p></div><div class="job-actions"><button class="secondary" id="back">新建测试</button><button class="danger" id="stop">停止任务</button></div></div>
+      <div class="status-line"><span id="state-badge" class="badge"></span><span id="current"></span><span id="elapsed"></span></div>
+      <div class="spectrum" id="spectrum" role="progressbar" aria-label="用例执行结果分布"></div>
+      <div class="spectrum-legend" id="spectrum-legend"></div>
+      <div class="metrics"><div class="card metric is-cases"><span>已执行用例</span><b id="metric-cases">0</b><small id="aux-count"></small></div><div class="card metric is-findings"><span>不同失败分组</span><b id="metric-findings">0</b><small>按异常类型与调用位置归组</small></div><div class="card metric is-normal"><span>正常通过 / 拒绝</span><b id="metric-normal">0 / 0</b><small>按配置的退出码统计</small></div><div class="card metric is-errors"><span>异常 / 超时</span><b id="metric-errors">0 / 0</b><small>超过单次时限的执行记为超时</small></div></div>
+      <div id="comparison" class="card comparison" hidden></div>
+      <div class="section-heading"><h2>发现与证据 <span id="finding-total"></span></h2><div><a class="secondary link-button" id="json-report">导出 JSON</a><a class="secondary link-button" id="html-report">导出 HTML</a><a class="secondary link-button" id="zip-report" hidden>完整证据 ZIP</a></div></div>
+      <div id="findings"></div>
+      <p class="footnote">点击发现记录，查看触发输入、错误堆栈和重放结果。</p>
+    </section>
+  </main>
+  <dialog id="evidence-dialog"><div class="dialog-heading"><div><div class="eyebrow">failure evidence</div><h2 id="evidence-title"></h2></div><button id="close-evidence" class="secondary">关闭 ✕</button></div><div id="evidence-content"></div></dialog>
+</body>
+</html>
