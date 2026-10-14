@@ -1,0 +1,20 @@
+{
+  "exported_at": "2026-10-14T08:15:26+00:00",
+  "source_filename": "33043df0-5fa1-4116-b8b0-ee09e3217ce2.jsonl",
+  "tool": "Claude Code",
+  "records": 421,
+  "visible_jsonl_sha256": "4fe844df388af012eb4937ae73c3e2118a6e01acc6a982ed5c74d48abe763c3b",
+  "excluded": [
+    "hidden reasoning",
+    "system instructions",
+    "host-injected context",
+    "screenshots"
+  ],
+  "redactions": [
+    "local user home path",
+    "email address",
+    "access tokens",
+    "ephemeral page token"
+  ],
+  "note": "Turns after the export time are not included; rerun to refresh."
+}
